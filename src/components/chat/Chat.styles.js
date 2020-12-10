@@ -62,4 +62,32 @@ export const Body = styled.div`
   }
 `
 
-export const Footer = styled.div``
+export const Footer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 62px;
+  border-top: 1px solid lightgray;
+
+  form {
+    display: flex;
+    flex: 1;
+  }
+
+  form > input {
+    flex: 1;
+    border-radius: 30px;
+    padding: 10px;
+    border: none;
+    outline-width: 0;
+  }
+
+  form > button {
+    display: none;
+  }
+
+  .MuiSvgIcon-root {
+    padding: 10px;
+    color: gray;
+  }
+`

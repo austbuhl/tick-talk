@@ -5,7 +5,8 @@ import {
   AttachFile,
   MoreVert,
   SearchOutlined,
-  InsertEmoticon
+  InsertEmoticon,
+  Mic
 } from '@material-ui/icons'
 
 export const Chat = () => {
@@ -50,6 +51,12 @@ export const Chat = () => {
 
       <Footer>
         <InsertEmoticon />
+        <form>
+          <input placeholder='Type a message' type='text' />
+          {/* do we need this button? */}
+          <button>Send a message</button>
+        </form>
+        <Mic />
       </Footer>
     </Wrapper>
   )
