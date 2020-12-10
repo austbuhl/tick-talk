@@ -50,5 +50,12 @@ export const Search = styled.div`
     border: none;
     outline-width: 0;
     margin-left: 10px;
+    width: 80%;
   }
+`
+
+export const SidebarChatContainer = styled.div`
+  flex: 1;
+  background-color: white;
+  overflow: scroll;
 `

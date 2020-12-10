@@ -1,5 +1,6 @@
 import React from 'react'
-import { Wrapper, Header, Search } from './Sidebar.styles'
+import { SidebarChat } from './SidebarChat'
+import { Wrapper, Header, Search, SidebarChatContainer } from './Sidebar.styles'
 import { Avatar, IconButton } from '@material-ui/core'
 import DonutLargeIcon from '@material-ui/icons/DonutLarge'
 import ChatIcon from '@material-ui/icons/Chat'
@@ -29,6 +30,12 @@ export const Sidebar = () => {
           <input placeholder='Search or start a new chat' type='text' />
         </div>
       </Search>
+
+      <SidebarChatContainer>
+        <SidebarChat />
+        <SidebarChat />
+        <SidebarChat />
+      </SidebarChatContainer>
     </Wrapper>
   )
 }
