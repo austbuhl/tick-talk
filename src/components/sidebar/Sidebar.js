@@ -2,10 +2,8 @@ import React from 'react'
 import { SidebarChat } from './SidebarChat'
 import { Wrapper, Header, Search, SidebarChatContainer } from './Sidebar.styles'
 import { Avatar, IconButton } from '@material-ui/core'
-import DonutLargeIcon from '@material-ui/icons/DonutLarge'
-import ChatIcon from '@material-ui/icons/Chat'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
-import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined'
+import { DonutLarge, Chat, MoreVert, SearchOutlined } from '@material-ui/icons'
+
 export const Sidebar = () => {
   return (
     <Wrapper>
@@ -13,20 +11,20 @@ export const Sidebar = () => {
         <Avatar src='https://avatars2.githubusercontent.com/u/44592690?s=460&u=e3953edcf5c5ace3e45c7565c52e9031f9177cf4&v=4' />
         <div className='header-right'>
           <IconButton>
-            <DonutLargeIcon />
+            <DonutLarge />
           </IconButton>
           <IconButton>
-            <ChatIcon />
+            <Chat />
           </IconButton>
           <IconButton>
-            <MoreVertIcon />
+            <MoreVert />
           </IconButton>
         </div>
       </Header>
 
       <Search>
         <div className='search-container'>
-          <SearchOutlinedIcon />
+          <SearchOutlined />
           <input placeholder='Search or start a new chat' type='text' />
         </div>
       </Search>

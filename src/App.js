@@ -1,5 +1,5 @@
-import { Chat } from './components/Chat'
-import { Sidebar } from './components/Sidebar'
+import { Chat } from './components/chat/Chat'
+import { Sidebar } from './components/sidebar/Sidebar'
 import { Wrapper } from './App.styles'
 
 function App() {
