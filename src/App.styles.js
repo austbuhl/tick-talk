@@ -13,5 +13,6 @@ export const Wrapper = styled.div`
     margin-top: -50px;
     height: 90vh;
     width: 90vw;
+    box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
   }
 `

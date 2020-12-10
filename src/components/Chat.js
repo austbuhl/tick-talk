@@ -1,9 +1,10 @@
 import React from 'react'
+import { Wrapper } from './Chat.styles'
 
 export const Chat = () => {
   return (
-    <div>
-      <h1>CHAT</h1>
-    </div>
+    <Wrapper>
+      <h1>I am the Chat</h1>
+    </Wrapper>
   )
 }

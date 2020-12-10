@@ -6,7 +6,6 @@ function App() {
   return (
     <Wrapper>
       <div className='app-body'>
-        <h1>Tick Talk</h1>
         <Sidebar />
         <Chat />
       </div>
