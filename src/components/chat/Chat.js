@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Wrapper, Header, Body, Footer } from './Chat.styles'
 import { Avatar, IconButton } from '@material-ui/core'
 import {
@@ -12,6 +12,7 @@ import axios from '../../axios'
 
 export const Chat = ({ messages }) => {
   const [msg, setMsgValue] = useState('')
+  const messageRef = useRef()
 
   const sendMessage = async (e) => {
     e.preventDefault()
@@ -23,7 +24,14 @@ export const Chat = ({ messages }) => {
     })
 
     setMsgValue('')
+    messageRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest'
+    })
   }
+
+  console.log(messageRef.current)
 
   return (
     <Wrapper>
@@ -57,6 +65,7 @@ export const Chat = ({ messages }) => {
             <span className='chat-timestamp'>{message.timestamp}</span>
           </p>
         ))}
+        <div ref={messageRef} />
       </Body>
 
       <Footer>
