@@ -30,7 +30,6 @@ function App() {
     }
   }, [messages])
 
-  console.log(messages)
   return (
     <Wrapper>
       <div className='app-body'>

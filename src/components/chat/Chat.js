@@ -20,7 +20,8 @@ export const Chat = ({ messages }) => {
       message: msg,
       name: 'Austin',
       timestamp: new Date().toUTCString(),
-      sent: true
+      sent: true,
+      roomId: '5ff88e91915d062d430ed3fe'
     })
 
     setMsgValue('')
@@ -30,8 +31,6 @@ export const Chat = ({ messages }) => {
       inline: 'nearest'
     })
   }
-
-  console.log(messageRef.current)
 
   return (
     <Wrapper>

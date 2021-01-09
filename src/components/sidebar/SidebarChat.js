@@ -10,25 +10,30 @@ import {
   DialogContentText,
   DialogTitle
 } from '@material-ui/core'
+import axios from '../../axios'
 
 export const SidebarChat = ({ addNewChat }) => {
   const [seed, setSeed] = useState('')
   const [open, setOpen] = useState(false)
+  const [name, setName] = useState('')
 
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000))
   }, [])
 
-  const createChat = () => {}
+  const createChat = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await axios.post('/rooms', {
+        name: name
+      })
+      console.log(response.data)
+    } catch (err) {
+      console.error(err)
+    }
 
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    console.log(open)
     setOpen(false)
-    console.log(open)
+    setName('')
   }
 
   return !addNewChat ? (
@@ -49,18 +54,19 @@ export const SidebarChat = ({ addNewChat }) => {
         onClose={() => setOpen(false)}
         aria-labelledby='form-dialog-title'
       >
-        <DialogTitle id='form-dialog-title'>Subscribe</DialogTitle>
+        <DialogTitle id='form-dialog-title'>Create a New Chat</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
+            Please enter the name of the room below.
           </DialogContentText>
           <TextField
             autoFocus
             margin='dense'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             id='name'
-            label='Email Address'
-            type='email'
+            label='Chat'
+            type='text'
             fullWidth
           />
         </DialogContent>
@@ -68,8 +74,8 @@ export const SidebarChat = ({ addNewChat }) => {
           <Button onClick={() => setOpen(false)} color='primary'>
             Cancel
           </Button>
-          <Button onClick={() => setOpen(false)} color='primary'>
-            Subscribe
+          <Button onClick={createChat} color='primary'>
+            Create
           </Button>
         </DialogActions>
       </Dialog>
