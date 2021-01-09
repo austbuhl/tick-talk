@@ -30,7 +30,7 @@ export const Sidebar = () => {
       </Search>
 
       <SidebarChatContainer>
-        <SidebarChat />
+        <SidebarChat addNewChat />
         <SidebarChat />
         <SidebarChat />
       </SidebarChatContainer>
