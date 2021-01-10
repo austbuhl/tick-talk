@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core'
 import axios from '../../axios'
 
-export const SidebarChat = ({ addNewChat }) => {
+export const SidebarChat = ({ addNewChat, room }) => {
   const [seed, setSeed] = useState('')
   const [open, setOpen] = useState(false)
   const [name, setName] = useState('')
@@ -20,6 +20,8 @@ export const SidebarChat = ({ addNewChat }) => {
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000))
   }, [])
+
+  console.log(room)
 
   const createChat = async (e) => {
     e.preventDefault()
@@ -40,7 +42,7 @@ export const SidebarChat = ({ addNewChat }) => {
     <Wrapper>
       <Avatar src={`https://avatars.dicebear.com/4.5/api/human/${seed}.svg`} />
       <div className='sidebar-chat-info'>
-        <h2>Room Name</h2>
+        <h2>{room.name}</h2>
         <p>This is the last message</p>
       </div>
     </Wrapper>

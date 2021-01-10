@@ -4,7 +4,11 @@ import { Wrapper, Header, Search, SidebarChatContainer } from './Sidebar.styles'
 import { Avatar, IconButton } from '@material-ui/core'
 import { DonutLarge, Chat, MoreVert, SearchOutlined } from '@material-ui/icons'
 
-export const Sidebar = () => {
+export const Sidebar = ({ rooms }) => {
+  const renderRooms = () => {
+    return rooms.map((room) => <SidebarChat room={room} />)
+  }
+
   return (
     <Wrapper>
       <Header>
@@ -31,8 +35,9 @@ export const Sidebar = () => {
 
       <SidebarChatContainer>
         <SidebarChat addNewChat />
-        <SidebarChat />
-        <SidebarChat />
+        {/* <SidebarChat />
+        <SidebarChat /> */}
+        {renderRooms()}
       </SidebarChatContainer>
     </Wrapper>
   )

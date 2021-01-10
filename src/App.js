@@ -7,10 +7,14 @@ import axios from './axios'
 
 function App() {
   const [messages, setMessages] = useState([])
+  const [rooms, setRooms] = useState([])
 
   useEffect(() => {
     axios.get('/messages').then((resp) => {
       setMessages(resp.data)
+    })
+    axios.get('/rooms').then((resp) => {
+      setRooms(resp.data)
     })
   }, [])
 
@@ -33,7 +37,7 @@ function App() {
   return (
     <Wrapper>
       <div className='app-body'>
-        <Sidebar />
+        <Sidebar rooms={rooms} />
         <Chat messages={messages} />
       </div>
     </Wrapper>
