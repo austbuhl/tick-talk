@@ -8,15 +8,24 @@ import axios from './axios'
 function App() {
   const [messages, setMessages] = useState([])
   const [rooms, setRooms] = useState([])
+  const [selectedRoom, setSelectedRoom] = useState('')
 
   useEffect(() => {
-    axios.get('/messages').then((resp) => {
-      setMessages(resp.data)
-    })
+    // axios.get('/messages').then((resp) => {
+    //   setMessages(resp.data)
+    // })
     axios.get('/rooms').then((resp) => {
       setRooms(resp.data)
     })
   }, [])
+
+  const getMessages = async (room) => {
+    const roomId = room._id
+
+    const resp = await axios.get(`/rooms/${roomId}/messages`)
+    setMessages(resp.data)
+    setSelectedRoom(room)
+  }
 
   useEffect(() => {
     const pusher = new Pusher('1e8a1765529bbbac589e', {
@@ -37,8 +46,8 @@ function App() {
   return (
     <Wrapper>
       <div className='app-body'>
-        <Sidebar rooms={rooms} />
-        <Chat messages={messages} />
+        <Sidebar rooms={rooms} getMessages={getMessages} />
+        <Chat messages={messages} room={selectedRoom} />
       </div>
     </Wrapper>
   )

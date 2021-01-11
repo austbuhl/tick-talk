@@ -12,16 +12,21 @@ import {
 } from '@material-ui/core'
 import axios from '../../axios'
 
-export const SidebarChat = ({ addNewChat, room }) => {
+export const SidebarChat = ({ addNewChat, room, getMessages }) => {
   const [seed, setSeed] = useState('')
   const [open, setOpen] = useState(false)
   const [name, setName] = useState('')
+  const [lastMessage, setLastMessage] = useState('')
 
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000))
   }, [])
 
-  console.log(room)
+  useEffect(() => {
+    if (room) {
+      getLastMessage()
+    }
+  }, [room])
 
   const createChat = async (e) => {
     e.preventDefault()
@@ -38,12 +43,18 @@ export const SidebarChat = ({ addNewChat, room }) => {
     setName('')
   }
 
+  const getLastMessage = async () => {
+    const roomId = room._id
+    const resp = await axios.get(`/rooms/${roomId}/messages`)
+    setLastMessage(resp.data[resp.data.length - 1])
+  }
+
   return !addNewChat ? (
-    <Wrapper>
+    <Wrapper onClick={() => getMessages(room)}>
       <Avatar src={`https://avatars.dicebear.com/4.5/api/human/${seed}.svg`} />
       <div className='sidebar-chat-info'>
         <h2>{room.name}</h2>
-        <p>This is the last message</p>
+        <p>{lastMessage}</p>
       </div>
     </Wrapper>
   ) : (

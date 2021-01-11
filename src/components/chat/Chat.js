@@ -10,7 +10,7 @@ import {
 } from '@material-ui/icons'
 import axios from '../../axios'
 
-export const Chat = ({ messages }) => {
+export const Chat = ({ messages, room }) => {
   const [msg, setMsgValue] = useState('')
   const messageRef = useRef()
 
@@ -32,12 +32,14 @@ export const Chat = ({ messages }) => {
     })
   }
 
+  console.log(messages[messages.length - 1])
+
   return (
     <Wrapper>
       <Header>
         <Avatar />
         <div className='header-info'>
-          <h3>Room Name</h3>
+          <h3>{room.name}</h3>
           <p>Last seen at...</p>
         </div>
         <div className='header-right'>
