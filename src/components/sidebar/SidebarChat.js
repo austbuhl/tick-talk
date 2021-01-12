@@ -26,7 +26,7 @@ export const SidebarChat = ({ addNewChat, room, getMessages }) => {
     if (room) {
       getLastMessage()
     }
-  }, [room])
+  }, [])
 
   const createChat = async (e) => {
     e.preventDefault()
@@ -49,12 +49,13 @@ export const SidebarChat = ({ addNewChat, room, getMessages }) => {
     setLastMessage(resp.data[resp.data.length - 1])
   }
 
+  console.log(lastMessage)
   return !addNewChat ? (
     <Wrapper onClick={() => getMessages(room)}>
       <Avatar src={`https://avatars.dicebear.com/4.5/api/human/${seed}.svg`} />
       <div className='sidebar-chat-info'>
         <h2>{room.name}</h2>
-        <p>{lastMessage}</p>
+        {lastMessage && <p> {lastMessage.message} </p>}
       </div>
     </Wrapper>
   ) : (
