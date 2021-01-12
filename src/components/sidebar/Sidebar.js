@@ -1,15 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { SidebarChat } from './SidebarChat'
 import { Wrapper, Header, Search, SidebarChatContainer } from './Sidebar.styles'
 import { Avatar, IconButton } from '@material-ui/core'
 import { DonutLarge, Chat, MoreVert, SearchOutlined } from '@material-ui/icons'
+import axios from '../../axios'
 
-export const Sidebar = ({ getMessages, rooms }) => {
+export const Sidebar = ({ getMessages }) => {
+  const [rooms, setRooms] = useState([])
+
   const renderRooms = () => {
     return rooms.map((room) => (
       <SidebarChat key={room._id} room={room} getMessages={getMessages} />
     ))
   }
+
+  useEffect(() => {
+    axios.get('/rooms').then((resp) => {
+      setRooms(resp.data)
+    })
+  }, [])
 
   return (
     <Wrapper>

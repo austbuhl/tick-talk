@@ -8,7 +8,6 @@ import axios from './axios'
 
 function App() {
   const [messages, setMessages] = useState([])
-  const [rooms, setRooms] = useState([])
   const [selectedRoom, setSelectedRoom] = useState('')
 
   const getMessages = async (room) => {
@@ -20,37 +19,25 @@ function App() {
   }
 
   useEffect(() => {
-    axios.get('/rooms').then((resp) => {
-      setRooms(resp.data)
-    })
-  }, [])
-
-  useEffect(() => {
     const pusher = new Pusher('1e8a1765529bbbac589e', {
       cluster: 'us2'
     })
 
-    const messagesChannel = pusher.subscribe('messages')
-    messagesChannel.bind('inserted', (msg) => {
-      setMessages([...messages, msg])
-    })
-
-    const roomsChannel = pusher.subscribe('rooms')
-    roomsChannel.bind('inserted', (room) => {
-      setRooms([...rooms, room])
+    const channel = pusher.subscribe('messages')
+    channel.bind('inserted', (data) => {
+      setMessages([...messages, data])
     })
 
     return () => {
-      messagesChannel.unbind()
-      messagesChannel.unsubscribe('messages')
-      roomsChannel.unbind()
-      roomsChannel.unsubscribe('rooms')
+      channel.unbind()
+      channel.unsubscribe('messages')
     }
-  }, [messages, rooms])
+  }, [messages])
 
   return (
     <Wrapper>
       <div className='app-body'>
+<<<<<<< HEAD
         <Switch>
           <Route path='/app'>
             <Sidebar getMessages={getMessages} rooms={rooms} />
@@ -60,6 +47,10 @@ function App() {
             <h1>Home Screen</h1>
           </Route>
         </Switch>
+=======
+        <Sidebar getMessages={getMessages} />
+        <Chat messages={messages} room={selectedRoom} />
+>>>>>>> parent of 93f47dd... Added pusher on room creation
       </div>
     </Wrapper>
   )
