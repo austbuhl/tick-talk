@@ -14,6 +14,8 @@ export const Chat = ({ messages, room }) => {
   const [msg, setMsgValue] = useState('')
   const messageRef = useRef()
 
+  console.log(room)
+
   const sendMessage = async (e) => {
     e.preventDefault()
     await axios.post('/messages', {
@@ -21,7 +23,7 @@ export const Chat = ({ messages, room }) => {
       name: 'Austin',
       timestamp: new Date().toUTCString(),
       sent: true,
-      roomId: '5ff88e91915d062d430ed3fe'
+      roomId: room._id
     })
 
     setMsgValue('')
@@ -32,7 +34,7 @@ export const Chat = ({ messages, room }) => {
     })
   }
 
-  console.log(messages[messages.length - 1])
+  // console.log(messages[messages.length - 1])
 
   return (
     <Wrapper>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Switch, Route } from 'react-router-dom'
 import Pusher from 'pusher-js'
 import { Chat } from './components/chat/Chat'
 import { Sidebar } from './components/sidebar/Sidebar'
@@ -9,48 +8,60 @@ import axios from './axios'
 function App() {
   const [messages, setMessages] = useState([])
   const [selectedRoom, setSelectedRoom] = useState('')
+  const [rooms, setRooms] = useState([])
 
   const getMessages = async (room) => {
     const roomId = room._id
-
     const resp = await axios.get(`/rooms/${roomId}/messages`)
     setMessages(resp.data)
+  }
+
+  const selectRoom = (room) => {
     setSelectedRoom(room)
   }
+
+  useEffect(() => {
+    if (selectedRoom) {
+      getMessages(selectedRoom)
+    }
+  }, [selectedRoom])
+
+  console.log(messages)
+
+  useEffect(() => {
+    axios.get('/rooms').then((resp) => {
+      setRooms(resp.data)
+    })
+  }, [])
 
   useEffect(() => {
     const pusher = new Pusher('1e8a1765529bbbac589e', {
       cluster: 'us2'
     })
 
-    const channel = pusher.subscribe('messages')
-    channel.bind('inserted', (data) => {
+    const msgChannel = pusher.subscribe('messages')
+    const roomsChannel = pusher.subscribe('rooms')
+    msgChannel.bind('inserted', (data) => {
       setMessages([...messages, data])
     })
 
+    roomsChannel.bind('inserted', (data) => {
+      setRooms([...rooms, data])
+    })
+
     return () => {
-      channel.unbind()
-      channel.unsubscribe('messages')
+      msgChannel.unbind()
+      msgChannel.unsubscribe('messages')
+      roomsChannel.unbind()
+      roomsChannel.unsubscribe('rooms')
     }
-  }, [messages])
+  }, [messages, rooms])
 
   return (
     <Wrapper>
       <div className='app-body'>
-<<<<<<< HEAD
-        <Switch>
-          <Route path='/app'>
-            <Sidebar getMessages={getMessages} rooms={rooms} />
-            <Chat messages={messages} room={selectedRoom} />
-          </Route>
-          <Route path='/'>
-            <h1>Home Screen</h1>
-          </Route>
-        </Switch>
-=======
-        <Sidebar getMessages={getMessages} />
+        <Sidebar selectRoom={selectRoom} rooms={rooms} messages={messages} />
         <Chat messages={messages} room={selectedRoom} />
->>>>>>> parent of 93f47dd... Added pusher on room creation
       </div>
     </Wrapper>
   )

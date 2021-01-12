@@ -12,20 +12,15 @@ import {
 } from '@material-ui/core'
 import axios from '../../axios'
 
-export const SidebarChat = ({ addNewChat, room, getMessages }) => {
+export const SidebarChat = ({ addNewChat, room, selectRoom, lastMessage }) => {
   const [seed, setSeed] = useState('')
   const [open, setOpen] = useState(false)
   const [name, setName] = useState('')
-  const [lastMessage, setLastMessage] = useState('')
+
+  console.log(lastMessage)
 
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000))
-  }, [])
-
-  useEffect(() => {
-    if (room) {
-      getLastMessage()
-    }
   }, [])
 
   const createChat = async (e) => {
@@ -43,15 +38,13 @@ export const SidebarChat = ({ addNewChat, room, getMessages }) => {
     setName('')
   }
 
-  const getLastMessage = async () => {
-    const roomId = room._id
-    const resp = await axios.get(`/rooms/${roomId}/messages`)
-    setLastMessage(resp.data[resp.data.length - 1])
-  }
-
-  console.log(lastMessage)
+  // const getLastMessage = async (room) => {
+  //   const roomId = room._id
+  //   const resp = await axios.get(`/rooms/${roomId}/messages`)
+  //   setLastMessage(resp.data[resp.data.length - 1])
+  // }
   return !addNewChat ? (
-    <Wrapper onClick={() => getMessages(room)}>
+    <Wrapper onClick={() => selectRoom(room)}>
       <Avatar src={`https://avatars.dicebear.com/4.5/api/human/${seed}.svg`} />
       <div className='sidebar-chat-info'>
         <h2>{room.name}</h2>
