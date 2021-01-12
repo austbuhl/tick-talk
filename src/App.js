@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Switch, Route } from 'react-router-dom'
 import Pusher from 'pusher-js'
 import { Chat } from './components/chat/Chat'
 import { Sidebar } from './components/sidebar/Sidebar'
@@ -50,8 +51,15 @@ function App() {
   return (
     <Wrapper>
       <div className='app-body'>
-        <Sidebar getMessages={getMessages} rooms={rooms} />
-        <Chat messages={messages} room={selectedRoom} />
+        <Switch>
+          <Route path='/app'>
+            <Sidebar getMessages={getMessages} rooms={rooms} />
+            <Chat messages={messages} room={selectedRoom} />
+          </Route>
+          <Route path='/'>
+            <h1>Home Screen</h1>
+          </Route>
+        </Switch>
       </div>
     </Wrapper>
   )
