@@ -12,15 +12,19 @@ import {
 } from '@material-ui/core'
 import axios from '../../axios'
 
-export const SidebarChat = ({ addNewChat, room, selectRoom, lastMessage }) => {
+export const SidebarChat = ({ addNewChat, room, selectRoom, roomMessages }) => {
   const [seed, setSeed] = useState('')
   const [open, setOpen] = useState(false)
   const [name, setName] = useState('')
 
-  console.log(lastMessage)
-
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000))
+  }, [])
+
+  useEffect(() => {
+    if (roomMessages) {
+      console.log(roomMessages[roomMessages.length - 1])
+    }
   }, [])
 
   const createChat = async (e) => {
@@ -39,16 +43,18 @@ export const SidebarChat = ({ addNewChat, room, selectRoom, lastMessage }) => {
   }
 
   // const getLastMessage = async (room) => {
-  //   const roomId = room._id
-  //   const resp = await axios.get(`/rooms/${roomId}/messages`)
-  //   setLastMessage(resp.data[resp.data.length - 1])
+  // const roomId = room._id
+  // const resp = await axios.get(`/rooms/${roomId}/messages`)
+  // setLastMessage(resp.data[resp.data.length - 1])
   // }
+
   return !addNewChat ? (
     <Wrapper onClick={() => selectRoom(room)}>
       <Avatar src={`https://avatars.dicebear.com/4.5/api/human/${seed}.svg`} />
       <div className='sidebar-chat-info'>
         <h2>{room.name}</h2>
-        {lastMessage && <p> {lastMessage.message} </p>}
+        {/* {roomMessages.length && ( */}
+        <p> {roomMessages[roomMessages.length - 1]?.message} </p>
       </div>
     </Wrapper>
   ) : (

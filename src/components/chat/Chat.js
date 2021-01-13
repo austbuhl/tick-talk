@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { Wrapper, Header, Body, Footer } from './Chat.styles'
 import { Avatar, IconButton } from '@material-ui/core'
 import {
@@ -9,29 +9,22 @@ import {
   Mic
 } from '@material-ui/icons'
 import axios from '../../axios'
+import { useStateValue } from '../../StateProvider'
 
 export const Chat = ({ messages, room }) => {
   const [msg, setMsgValue] = useState('')
-  const messageRef = useRef()
-
-  console.log(room)
+  const [{ user }, dispatch] = useStateValue()
 
   const sendMessage = async (e) => {
     e.preventDefault()
     await axios.post('/messages', {
       message: msg,
-      name: 'Austin',
+      name: user.displayName,
       timestamp: new Date().toUTCString(),
-      sent: true,
       roomId: room._id
     })
 
     setMsgValue('')
-    messageRef.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-      inline: 'nearest'
-    })
   }
 
   // console.log(messages[messages.length - 1])
@@ -42,7 +35,10 @@ export const Chat = ({ messages, room }) => {
         <Avatar />
         <div className='header-info'>
           <h3>{room.name}</h3>
-          <p>Last seen at...</p>
+          <p>
+            Last seen{' '}
+            {new Date(messages[messages.length - 1]?.timestamp).toUTCString()}
+          </p>
         </div>
         <div className='header-right'>
           <IconButton>
@@ -61,14 +57,15 @@ export const Chat = ({ messages, room }) => {
         {messages.map((message) => (
           <p
             key={message._id}
-            className={`chat-message ${message.sent && 'chat-sent'}`}
+            className={`chat-message ${
+              message.name === user.displayName && 'chat-sent'
+            }`}
           >
             <span className='chat-name'>{message.name}</span>
             {message.message}
             <span className='chat-timestamp'>{message.timestamp}</span>
           </p>
         ))}
-        <div ref={messageRef} />
       </Body>
 
       <Footer>
